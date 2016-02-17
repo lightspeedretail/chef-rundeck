@@ -9,6 +9,10 @@ shared_examples 'Java' do
 end
 
 shared_examples 'Installation' do
+  describe file('/etc/yum.repos.d/rundeck.repo') do
+    it { should exist }
+  end
+
   %w(rundeck rundeck-config).each do |p|
     describe package(p) do
       it { should be_installed.with_version('2.6.2-1.13.GA') }
@@ -23,5 +27,33 @@ shared_examples 'Installation' do
   describe user('rundeck') do
     it { should exist }
     it { should belong_to_group 'rundeck' }
+  end
+
+  describe file('/var/lib/rundeck') do
+    it { should be_directory }
+    it { should be_mode 750 }
+    it { should be_owned_by 'rundeck' }
+    it { should be_grouped_into 'rundeck' }
+  end
+
+  describe file('/var/lib/rundeck/projects') do
+    it { should be_directory }
+    it { should be_mode 750 }
+    it { should be_owned_by 'rundeck' }
+    it { should be_grouped_into 'rundeck' }
+  end
+
+  describe file('/var/rundeck') do
+    it { should_not exist }
+  end
+end
+
+shared_examples 'Service' do
+  describe port(4440) do
+    it { should be_listening.on('::').with('tcp6') }
+  end
+
+  describe command('curl -s http://localhost:4440/user/login > /dev/null') do
+    its(:exit_status) { should eq 0 }
   end
 end

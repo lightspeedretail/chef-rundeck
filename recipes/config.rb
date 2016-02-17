@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: rundeck
-# Recipe:: default
+# Recipe:: config
 #
 # Copyright (C) 2016 Jean-Francois Theroux
 #
@@ -24,8 +24,10 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-node.default['java']['jdk_version'] = '7'
-include_recipe 'java'
-
-include_recipe 'rundeck::install'
-include_recipe 'rundeck::config'
+template '/etc/rundeck/framework.properties' do
+  owner node['rundeck']['user']
+  group node['rundeck']['group']
+  mode 0400
+  sensitive true
+  notifies :restart, 'service[rundeckd]'
+end

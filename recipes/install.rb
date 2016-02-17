@@ -28,6 +28,24 @@ cookbook_file '/etc/yum.repos.d/rundeck.repo'
 
 package 'rundeck' do
   version node['rundeck']['version']
+  notifies :restart, 'service[rundeckd]'
+end
+
+directory node['rundeck']['base_dir'] do
+  owner node['rundeck']['user']
+  group node['rundeck']['group']
+  mode 0750
+end
+
+directory "#{node['rundeck']['base_dir']}/projects" do
+  owner node['rundeck']['user']
+  group node['rundeck']['group']
+  mode 0750
+end
+
+directory '/var/rundeck' do
+  recursive true
+  action :delete
 end
 
 service 'rundeckd' do
