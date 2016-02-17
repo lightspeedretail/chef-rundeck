@@ -29,6 +29,13 @@ shared_examples 'Installation' do
     it { should belong_to_group 'rundeck' }
   end
 
+  describe file('/etc/rundeck') do
+    it { should be_directory }
+    it { should be_mode 750 }
+    it { should be_owned_by 'rundeck' }
+    it { should be_grouped_into 'rundeck' }
+  end
+
   describe file('/var/lib/rundeck') do
     it { should be_directory }
     it { should be_mode 750 }

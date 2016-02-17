@@ -31,6 +31,12 @@ package 'rundeck' do
   notifies :restart, 'service[rundeckd]'
 end
 
+directory node['rundeck']['conf_dir'] do
+  owner node['rundeck']['user']
+  group node['rundeck']['group']
+  mode 0750
+end
+
 directory node['rundeck']['base_dir'] do
   owner node['rundeck']['user']
   group node['rundeck']['group']
