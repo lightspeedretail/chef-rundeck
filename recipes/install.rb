@@ -29,3 +29,7 @@ cookbook_file '/etc/yum.repos.d/rundeck.repo'
 package 'rundeck' do
   version node['rundeck']['version']
 end
+
+service 'rundeckd' do
+  action [:enable, :start]
+end
