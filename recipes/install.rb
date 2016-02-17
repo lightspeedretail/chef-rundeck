@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: rundeck
-# Recipe:: default
+# Recipe:: install
 #
 # Copyright (C) 2016 Jean-Francois Theroux
 #
@@ -24,7 +24,8 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-node.default['java']['jdk_version'] = '7'
-include_recipe 'java'
+cookbook_file '/etc/yum.repos.d/rundeck.repo'
 
-include_recipe 'rundeck::install'
+package 'rundeck' do
+  version node['rundeck']['version']
+end
