@@ -24,10 +24,19 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-template '/etc/rundeck/framework.properties' do
+template "#{node['rundeck']['conf_dir']}/framework.properties" do
   owner node['rundeck']['user']
   group node['rundeck']['group']
   mode 0400
   sensitive true
   notifies :restart, 'service[rundeckd]'
+end
+
+template "#{node['rundeck']['conf_dir']}/realm.properties" do
+  owner node['rundeck']['user']
+  group node['rundeck']['group']
+  mode 0400
+  sensitive true
+  notifies :restart, 'service[rundeckd]'
+  not_if "grep 'Managed by Chef' #{node['rundeck']['conf_dir']}/realm.properties"
 end

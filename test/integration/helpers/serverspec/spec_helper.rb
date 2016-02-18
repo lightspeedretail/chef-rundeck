@@ -64,3 +64,14 @@ shared_examples 'Service' do
     its(:exit_status) { should eq 0 }
   end
 end
+
+shared_examples 'Configuration' do
+  %w(realm framework).each do |e|
+    describe file("/etc/rundeck/#{e}.properties") do
+      it { should be_file }
+      it { should be_mode 400 }
+      it { should be_owned_by 'rundeck' }
+      it { should be_grouped_into 'rundeck' }
+    end
+  end
+end
