@@ -8,6 +8,8 @@ framework.server.name = <%= node['rundeck']['server']['name'] %>
 framework.server.hostname = <%= node['rundeck']['server']['hostname'] %>
 framework.server.port = <%= node['rundeck']['server']['port'] %>
 framework.server.url = <%= node['rundeck']['server']['url'] %>
+framework.server.username = <%= node['rundeck']['admin_user'] %>
+framework.server.password = <%= node['rundeck']['admin_password'] %>
 
 # ----------------------------------------------------------------
 # Installation locations
@@ -28,3 +30,9 @@ framework.libext.dir=<%= node['rundeck']['base_dir'] %>/libext
 framework.ssh.keypath = <%= node['rundeck']['ssh']['key_path'] %>
 framework.ssh.user = <%= node['rundeck']['ssh']['user'] %>
 framework.ssh.timeout = <%= node['rundeck']['ssh']['timeout'] %>
+
+# ----------------------------------------------------------------
+# API tokens
+# ----------------------------------------------------------------
+
+rundeck.tokens.file=/etc/rundeck/tokens.properties
