@@ -24,6 +24,8 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
+require 'securerandom'
+
 %w(framework realm tokens).each do |t|
   template "#{node['rundeck']['conf_dir']}/#{t}.properties" do
     owner node['rundeck']['user']
@@ -33,4 +35,13 @@
     notifies :restart, 'service[rundeckd]'
     not_if "grep 'Managed by Chef' #{node['rundeck']['conf_dir']}/#{t}.properties" unless t == 'framework'
   end
+end
+
+# Required for the cookbook to be able
+# to call the API.
+rundeck_user 'chef' do
+  api_token true
+  password SecureRandom.hex
+  roles %w(admin)
+  not_if "grep 'chef:' #{node['rundeck']['conf_dir']}/realm.properties"
 end

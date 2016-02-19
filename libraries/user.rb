@@ -7,11 +7,15 @@ module RundeckUser
     current_auth_line == new_auth_line ? true : false
   end
 
-  def user?(user, realm)
-    File.read(realm).match(/^#{user}:/) ? true : false
+  def md5(string)
+    Digest::MD5.hexdigest(string)
   end
 
-  def md5(password)
-    Digest::MD5.hexdigest(password)
+  def token?(user, token)
+    File.read(token).match(/^#{user}:/) ? true : false
+  end
+
+  def user?(user, realm)
+    File.read(realm).match(/^#{user}:/) ? true : false
   end
 end
