@@ -1,5 +1,5 @@
-require_relative '../libraries/helpers'
-include Helpers
+require_relative '../libraries/user'
+include RundeckUser
 
 resource_name :rundeck_user
 

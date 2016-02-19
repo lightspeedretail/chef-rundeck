@@ -1,6 +1,6 @@
 require 'digest/md5'
 
-module Helpers
+module RundeckUser
   def compare_user?(new_auth_line, realm)
     user = new_auth_line.split(':').first
     current_auth_line = File.read(realm).match(/^#{user}(.*)/).to_s
