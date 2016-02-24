@@ -18,6 +18,7 @@ action :manage do
   data['config'].merge!(new_resource.properties) if new_resource.properties
 
   return if project?(new_resource.project, token)
+
   converge_by "creating project '#{new_resource.project}'" do
     post('/api/15/projects', token, data.to_json)
   end
