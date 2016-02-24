@@ -49,6 +49,12 @@ directory "#{node['rundeck']['base_dir']}/projects" do
   mode 0750
 end
 
+directory node['rundeck']['jobs_dir'] do
+  owner node['rundeck']['user']
+  group node['rundeck']['group']
+  mode 0750
+end
+
 directory '/var/rundeck' do
   recursive true
   action :delete
