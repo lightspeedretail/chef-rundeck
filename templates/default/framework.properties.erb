@@ -35,4 +35,4 @@ framework.ssh.timeout = <%= node['rundeck']['ssh']['timeout'] %>
 # API tokens
 # ----------------------------------------------------------------
 
-rundeck.tokens.file = /etc/rundeck/tokens.properties
+rundeck.tokens.file = <%= node['rundeck']['conf_dir'] %>/tokens.properties
