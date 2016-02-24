@@ -4,15 +4,21 @@ driver:
 
 provisioner:
   name: chef_solo
+  require_chef_omnibus: 12.5.1
 
 platforms:
   - name: centos-7.1
-    driver_config:
-      network:
-      - ['forwarded_port', {guest: 4440, host: 4440}]
+
 
 suites:
   - name: default
+    run_list:
+      - recipe[rundeck]
+
+  - name: resources
+    driver_config:
+      network:
+      - ['forwarded_port', {guest: 4440, host: 4440}]
     run_list:
       - recipe[rundeck]
       - recipe[rundeck-test]
