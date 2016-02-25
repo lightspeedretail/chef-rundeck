@@ -11,11 +11,18 @@ module RundeckAPI
     fail 'API authentication problem' if res.code == '403'
   end
 
-  def get(endpoint, token)
+  def generate_parameters_string(parameters)
+    fail 'parameters must be a hash' unless parameters.class == Hash
+    params = nil
+    parameters.each { |k, v| params.nil? ? params = "&#{k}=#{v}" : params += "&#{k}=#{v}" }
+    params
+  end
+
+  def get(endpoint, token, format = 'json')
     uri = URI("#{node['rundeck']['server']['url']}#{endpoint}?authtoken=#{token}")
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Get.new(uri.request_uri)
-    request.initialize_http_header('Accept' => 'application/json')
+    request.initialize_http_header('Accept' => "application/#{format}")
     res = http.request(request)
     fail 'API authentication problem' if res.code == '403'
     res.body
@@ -33,8 +40,13 @@ module RundeckAPI
     jobs.first['id']
   end
 
-  def post(endpoint, token, data, format = 'json')
-    uri = URI("#{node['rundeck']['server']['url']}#{endpoint}?authtoken=#{token}")
+  def post(endpoint, token, data, format = 'json', parameters = nil)
+    if parameters.nil?
+      uri = URI("#{node['rundeck']['server']['url']}#{endpoint}?authtoken=#{token}")
+    else
+      params = generate_parameters_string(parameters)
+      uri = URI("#{node['rundeck']['server']['url']}#{endpoint}?authtoken=#{token}#{params}")
+    end
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Post.new(uri.request_uri)
     request.initialize_http_header('Content-Type' => "application/#{format}")
