@@ -7,7 +7,8 @@ module RundeckAPI
     uri = URI("#{node['rundeck']['server']['url']}#{endpoint}?authtoken=#{token}")
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Delete.new(uri.request_uri)
-    http.request(request)
+    res = http.request(request)
+    fail 'API authentication problem' if res.code == '403'
   end
 
   def get(endpoint, token)
@@ -38,7 +39,8 @@ module RundeckAPI
     request = Net::HTTP::Post.new(uri.request_uri)
     request.initialize_http_header('Content-Type' => "application/#{format}")
     request.body = data
-    http.request(request)
+    res = http.request(request)
+    fail 'API authentication problem' if res.code == '403'
   end
 
   def project?(project, token)
@@ -56,5 +58,21 @@ module RundeckAPI
 
   def token?(user, token_file)
     File.read(token_file).match(/^#{user}:/) ? true : false
+  end
+
+  def service_listening?
+    uri = URI("#{node['rundeck']['server']['url']}/api")
+    http = Net::HTTP.new(uri.host, uri.port)
+    request = Net::HTTP::Get.new(uri.request_uri)
+    res = http.request(request)
+    true if res.code == '200'
+  rescue Errno::ECONNREFUSED
+    false
+  end
+
+  def wait_for_rundeck_to_be_up
+    puts ''
+    puts 'Waiting for Rundeck to be up'
+    sleep(1) until service_listening?
   end
 end
