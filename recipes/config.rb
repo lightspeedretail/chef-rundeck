@@ -43,5 +43,4 @@ cookbook_file '/etc/rundeck/chef.aclpolicy' do
   group node['rundeck']['group']
   mode 0400
   sensitive true
-  notifies :restart, 'service[rundeckd]'
 end
