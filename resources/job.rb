@@ -13,6 +13,8 @@ def whyrun_supported?
 end
 
 action :manage do
+  wait_for_rundeck_to_be_up
+
   token = token('chef', new_resource.token_file)
 
   return if job?(new_resource.project, new_resource.job, token)
@@ -23,6 +25,8 @@ action :manage do
 end
 
 action :remove do
+  wait_for_rundeck_to_be_up
+
   token = token('chef', new_resource.token_file)
   return unless job?(new_resource.project, new_resource.job, token)
 
