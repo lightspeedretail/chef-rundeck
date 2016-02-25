@@ -77,7 +77,7 @@ context 'Service' do
 end
 
 context 'Configuration' do
-  %w(realm framework tokens).each do |e|
+  %w(realm framework tokens rundeck-config).each do |e|
     describe file("/etc/rundeck/#{e}.properties") do
       it { should be_file }
       it { should be_mode 400 }

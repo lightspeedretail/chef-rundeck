@@ -24,14 +24,14 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-%w(framework realm tokens).each do |t|
+%w(framework realm tokens rundeck-config).each do |t|
   template "#{node['rundeck']['conf_dir']}/#{t}.properties" do
     owner node['rundeck']['user']
     group node['rundeck']['group']
     mode 0400
     sensitive true
     notifies :restart, 'service[rundeckd]'
-    not_if "grep 'Managed by Chef' #{node['rundeck']['conf_dir']}/#{t}.properties" unless t == 'framework'
+    not_if "grep 'Managed by Chef' #{node['rundeck']['conf_dir']}/#{t}.properties" unless t =~ /(framework|rundeck-config)/
   end
 end
 
