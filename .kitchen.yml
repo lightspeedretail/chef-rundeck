@@ -14,6 +14,12 @@ suites:
   - name: default
     run_list:
       - recipe[rundeck]
+    attributes:
+      rundeck:
+        server:
+          jvm:
+            xmx: 256m
+            xms: 256m
 
   - name: resources
     driver_config:
@@ -22,6 +28,12 @@ suites:
     run_list:
       - recipe[rundeck]
       - recipe[rundeck-test]
+    attributes:
+      rundeck:
+        server:
+          jvm:
+            xmx: 256m
+            xms: 256m
 
   - name: bind_address
     run_list:
@@ -30,3 +42,6 @@ suites:
       rundeck:
         server:
           host: 127.0.0.1
+          jvm:
+            xmx: 256m
+            xms: 256m
