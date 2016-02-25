@@ -32,7 +32,7 @@ action :manage do
     end
   else
     converge_by "creating user '#{new_resource.user}'" do
-      ::File.open(new_resource.realm_file, 'a').puts "#{auth_line}\n"
+      ::File.write(new_resource.token_file, ::File.read(new_resource.token_file).concat("#{auth_line}\n"))
     end
   end
 end

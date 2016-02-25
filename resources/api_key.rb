@@ -15,7 +15,7 @@ action :manage do
 
   converge_by "creating API token '#{new_resource.name}'" do
     token = create_token
-    ::File.open(new_resource.token_file, 'a').puts "#{new_resource.name}: #{token}\n"
+    ::File.write(new_resource.token_file, ::File.read(new_resource.token_file).concat("#{new_resource.name}: #{token}\n"))
   end
 end
 
