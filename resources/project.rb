@@ -1,3 +1,4 @@
+require 'json'
 require_relative '../libraries/api'
 include RundeckAPI
 
@@ -20,10 +21,19 @@ action :manage do
   data = { 'name' => new_resource.name, 'config' => { 'description' => new_resource.description } }
   data['config'].merge!(new_resource.properties) if new_resource.properties
 
-  return if project?(new_resource.project, token)
+  if project?(new_resource.project, token)
+    current_config = JSON.parse(get("/api/15/project/#{new_resource.project}/config", token))
+    new_config = current_config.merge!(new_resource.properties) if new_resource.properties
 
-  converge_by "creating project '#{new_resource.project}'" do
-    post('/api/15/projects', token, data.to_json)
+    return if current_config == new_config
+
+    converge_by "updating project '#{new_resource.project}'" do
+      put("/api/15/project/#{new_resource.project}/config", token, new_config.to_json)
+    end
+  else
+    converge_by "creating project '#{new_resource.project}'" do
+      post('/api/15/projects', token, data.to_json)
+    end
   end
 end
 

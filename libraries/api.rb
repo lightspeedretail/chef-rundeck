@@ -43,6 +43,16 @@ module RundeckAPI
     fail 'API authentication problem' if res.code == '403'
   end
 
+  def put(endpoint, token, data, format = 'json')
+    uri = URI("#{node['rundeck']['server']['url']}#{endpoint}?authtoken=#{token}")
+    http = Net::HTTP.new(uri.host, uri.port)
+    request = Net::HTTP::Put.new(uri.request_uri)
+    request.initialize_http_header('Content-Type' => "application/#{format}")
+    request.body = data
+    res = http.request(request)
+    fail 'API authentication problem' if res.code == '403'
+  end
+
   def project?(project, token)
     projects = JSON.parse(get('/api/15/projects', token))
     projects.select { |p| p['name'] == project }.empty? ? false : true
