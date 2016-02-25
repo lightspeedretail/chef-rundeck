@@ -37,7 +37,7 @@ for:
   project:
     - match:
         name: '.*'
-      allow: [delete,read] # allow view of all projects
+      allow: [admin,delete,read] # allow view of all projects
   storage:
     - match:
         path: '(keys|keys/.*)'
