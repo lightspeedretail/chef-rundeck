@@ -35,12 +35,12 @@
   end
 end
 
-# Let Chef manage Rundeck.
-rundeck_api_key 'chef'
-
-cookbook_file '/etc/rundeck/chef.aclpolicy' do
+cookbook_file '/etc/rundeck/apitoken.aclpolicy' do
   owner node['rundeck']['user']
   group node['rundeck']['group']
   mode 0400
   sensitive true
 end
+
+# Let Chef manage Rundeck.
+rundeck_api_key 'chef'
