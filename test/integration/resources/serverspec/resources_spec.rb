@@ -40,6 +40,15 @@ context 'Create a project' do
   end
 end
 
+context 'Delete a project' do
+  describe "rundeck project 'TestProject2'" do
+    it 'should_not exist' do
+      project = project?('TestProject2', token)
+      expect(project).to be false
+    end
+  end
+end
+
 context 'Create a job' do
   describe "rundeck job 'test_job'" do
     it 'should exist' do

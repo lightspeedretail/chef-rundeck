@@ -17,6 +17,11 @@ module Testing
     jobs.select { |p| p['name'] == job }.empty? ? false : true
   end
 
+  def project?(project, token)
+    projects = JSON.parse(get('/api/15/projects', token))
+    projects.select { |p| p['name'] == project }.empty? ? false : true
+  end
+
   def token
     File.read('/etc/rundeck/tokens.properties').match(/^chef:(.*)/).to_s.split(':').last[1..-1]
   end
