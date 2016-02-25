@@ -1,6 +1,10 @@
 require 'serverspec'
+require_relative 'testing'
+include Testing
 
 set :backend, :exec
+
+wait_for_rundeck_to_be_up
 
 context 'Java' do
   describe package('java-1.7.0-openjdk') do

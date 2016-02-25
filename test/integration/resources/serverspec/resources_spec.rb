@@ -4,6 +4,8 @@ include Testing
 
 set :backend, :exec
 
+wait_for_rundeck_to_be_up
+
 context 'Add user' do
   # FIXME: can't seem to get that to work the file resource
   describe command("egrep -e '^admin: MD5:[a-z0-9]{32},admin,user' /etc/rundeck/realm.properties") do

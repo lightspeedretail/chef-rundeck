@@ -25,4 +25,20 @@ module Testing
   def token
     File.read('/etc/rundeck/tokens.properties').match(/^chef:(.*)/).to_s.split(':').last[1..-1]
   end
+
+  def service_listening?
+    uri = URI('http://localhost:4440/api')
+    http = Net::HTTP.new(uri.host, uri.port)
+    request = Net::HTTP::Get.new(uri.request_uri)
+    res = http.request(request)
+    true if res.code == '200'
+  rescue Errno::ECONNREFUSED
+    false
+  end
+
+  def wait_for_rundeck_to_be_up
+    puts ''
+    puts 'Waiting for Rundeck to be up'
+    sleep(1) until service_listening?
+  end
 end
