@@ -35,6 +35,14 @@
   end
 end
 
+template "#{node['rundeck']['conf_dir']}/profile" do
+  owner node['rundeck']['user']
+  group node['rundeck']['group']
+  mode 0400
+  sensitive true
+  notifies :restart, 'service[rundeckd]'
+end
+
 cookbook_file '/etc/rundeck/apitoken.aclpolicy' do
   owner node['rundeck']['user']
   group node['rundeck']['group']

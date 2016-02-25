@@ -11,8 +11,15 @@ default['rundeck']['admin_password'] = 'supersecretsauce'
 
 default['rundeck']['server']['name'] = 'localhost'
 default['rundeck']['server']['hostname'] = 'localhost'
+default['rundeck']['server']['host'] = '0.0.0.0'
 default['rundeck']['server']['port'] = 4440
 default['rundeck']['server']['url'] = "http://#{node['rundeck']['server']['hostname']}:#{node['rundeck']['server']['port']}"
+
+default['rundeck']['server']['jvm']['xmx'] = '1024m'
+default['rundeck']['server']['jvm']['xms'] = '1024m'
+
+default['rundeck']['server']['ssl']['enabled'] = false
+default['rundeck']['server']['ssl']['port'] = 4443
 
 default['rundeck']['ssh']['key_path'] = '/var/lib/rundeck/.ssh/id_rsa'
 default['rundeck']['ssh']['user'] = 'rundeck'

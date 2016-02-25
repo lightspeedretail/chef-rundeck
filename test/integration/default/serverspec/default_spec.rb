@@ -85,6 +85,13 @@ context 'Configuration' do
       it { should be_grouped_into 'rundeck' }
     end
   end
+
+  describe file('/etc/rundeck/profile') do
+    it { should be_file }
+    it { should be_mode 400 }
+    it { should be_owned_by 'rundeck' }
+    it { should be_grouped_into 'rundeck' }
+  end
 end
 
 context 'No admin user' do

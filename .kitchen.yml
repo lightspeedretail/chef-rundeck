@@ -22,3 +22,11 @@ suites:
     run_list:
       - recipe[rundeck]
       - recipe[rundeck-test]
+
+  - name: bind_address
+    run_list:
+      - recipe[rundeck]
+    attributes:
+      rundeck:
+        server:
+          host: 127.0.0.1
