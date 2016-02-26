@@ -1,5 +1,7 @@
 require_relative '../libraries/api'
+require_relative '../libraries/job'
 include RundeckAPI
+include RundeckJob
 
 resource_name :rundeck_job
 
@@ -13,6 +15,7 @@ def whyrun_supported?
 end
 
 action :manage do
+  validate_job(new_resource.definition)
   wait_for_rundeck_to_be_up
 
   token = token('chef', new_resource.token_file)
