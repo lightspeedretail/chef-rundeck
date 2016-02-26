@@ -1,4 +1,4 @@
-This cookbook exposes resources to manage [Rundeck](http://rundeck.org/).
+This cookbook exposes resources to manage [Rundeck](http://rundeck.org/). The project and job resources use the API to avoid having to restart Rundeck all the time.
 
 ## Usage
 
@@ -48,6 +48,10 @@ end
 ~~~ text
 rundeck_api_key 'jdoe'
 ~~~
+
+### ACLs
+
+I didn't write a resource for that. I think it's simpler to just dump a file under `/etc/rundeck` if you need ACLs. That said, if someone has a good PR, I'd accept it.
 
 ## Contributing
 
