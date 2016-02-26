@@ -8,7 +8,6 @@ resource_name :rundeck_user
 property :password, String, required: true
 property :realm_file, String, default: '/etc/rundeck/realm.properties'
 property :roles, Array, required: true
-property :token_file, String, default: '/etc/rundeck/tokens.properties'
 property :user, String, required: true, name_property: true
 
 def whyrun_supported?
