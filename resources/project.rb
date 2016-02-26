@@ -23,7 +23,7 @@ action :manage do
 
   if project?(new_resource.project, token)
     current_config = JSON.parse(get("/api/15/project/#{new_resource.project}/config", token))
-    new_config = current_config.merge!(new_resource.properties) if new_resource.properties
+    new_config = current_config.merge(new_resource.properties) if new_resource.properties
 
     return if current_config == new_config
 
