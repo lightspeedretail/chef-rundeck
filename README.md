@@ -1,41 +1,28 @@
-# rundeck-cookbook
-
-TODO: Enter the cookbook description here.
-
-## Supported Platforms
-
-TODO: List your supported platforms.
-
-## Attributes
-
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['rundeck']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
+This cookbook exposes resources to manage [Rundeck](http://rundeck.org/).
 
 ## Usage
 
-### rundeck::default
++ Write a wrapper cookbook that includes this cookbook
++ In the wrapper cookbook, use the resources as needed
 
-Include `rundeck` in your node's `run_list`:
+## Resources
 
-```json
-{
-  "run_list": [
-    "recipe[rundeck::default]"
-  ]
-}
-```
+### User
+
+### Project
+
+### Jobs
+
+### API token
+
+## Contributing
+
++ Fork this repository
++ Make your changes in a feature branch
++ Commit your changes in small batches in case we need to cherry pick
++ Write tests for your changes
++ Make sure all tests pass
++ Open a pull request
 
 ## License and Authors
 
