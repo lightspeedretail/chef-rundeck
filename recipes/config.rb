@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: rundeck
-# Recipe:: default
+# Recipe:: config
 #
 # Copyright (C) 2016 Jean-Francois Theroux
 #
@@ -24,8 +24,31 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-node.default['java']['jdk_version'] = '7'
-include_recipe 'java'
+%w(framework realm tokens rundeck-config).each do |t|
+  template "#{node['rundeck']['conf_dir']}/#{t}.properties" do
+    owner node['rundeck']['user']
+    group node['rundeck']['group']
+    mode 0400
+    sensitive true
+    notifies :restart, 'service[rundeckd]'
+    not_if "grep 'Managed by Chef' #{node['rundeck']['conf_dir']}/#{t}.properties" unless t =~ /(framework|rundeck-config)/
+  end
+end
 
-include_recipe 'rundeck::install'
-include_recipe 'rundeck::config'
+template "#{node['rundeck']['conf_dir']}/profile" do
+  owner node['rundeck']['user']
+  group node['rundeck']['group']
+  mode 0400
+  sensitive true
+  notifies :restart, 'service[rundeckd]'
+end
+
+cookbook_file '/etc/rundeck/apitoken.aclpolicy' do
+  owner node['rundeck']['user']
+  group node['rundeck']['group']
+  mode 0400
+  sensitive true
+end
+
+# Let Chef manage Rundeck.
+rundeck_api_key 'chef'

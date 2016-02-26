@@ -1,0 +1,38 @@
+# Managed by Chef. Local changes will be overwritten!
+
+# ----------------------------------------------------------------
+# Rundeck server connection information
+# ----------------------------------------------------------------
+
+framework.server.name = <%= node['rundeck']['server']['name'] %>
+framework.server.hostname = <%= node['rundeck']['server']['hostname'] %>
+framework.server.port = <%= node['rundeck']['server']['port'] %>
+framework.server.url = <%= node['rundeck']['server']['url'] %>
+framework.server.username = <%= node['rundeck']['admin_user'] %>
+framework.server.password = <%= node['rundeck']['admin_password'] %>
+
+# ----------------------------------------------------------------
+# Installation locations
+# ----------------------------------------------------------------
+
+rdeck.base = <%= node['rundeck']['base_dir'] %>
+
+framework.projects.dir = <%= node['rundeck']['base_dir'] %>/projects
+framework.etc.dir = <%= node['rundeck']['conf_dir'] %>
+framework.var.dir = <%= node['rundeck']['base_dir'] %>/var
+framework.tmp.dir = <%= node['rundeck']['base_dir'] %>/var/tmp
+framework.libext.dir = <%= node['rundeck']['base_dir'] %>/libext
+
+# ----------------------------------------------------------------
+# SSH defaults for node executor and file copier
+# ----------------------------------------------------------------
+
+framework.ssh.keypath = <%= node['rundeck']['ssh']['key_path'] %>
+framework.ssh.user = <%= node['rundeck']['ssh']['user'] %>
+framework.ssh.timeout = <%= node['rundeck']['ssh']['timeout'] %>
+
+# ----------------------------------------------------------------
+# API tokens
+# ----------------------------------------------------------------
+
+rundeck.tokens.file = <%= node['rundeck']['conf_dir'] %>/tokens.properties

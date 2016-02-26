@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: rundeck
-# Recipe:: default
+# Recipe:: install
 #
 # Copyright (C) 2016 Jean-Francois Theroux
 #
@@ -24,8 +24,42 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-node.default['java']['jdk_version'] = '7'
-include_recipe 'java'
+cookbook_file '/etc/yum.repos.d/rundeck.repo'
 
-include_recipe 'rundeck::install'
-include_recipe 'rundeck::config'
+package 'rundeck' do
+  version node['rundeck']['version']
+  notifies :restart, 'service[rundeckd]'
+end
+
+directory node['rundeck']['conf_dir'] do
+  owner node['rundeck']['user']
+  group node['rundeck']['group']
+  mode 0750
+end
+
+directory node['rundeck']['base_dir'] do
+  owner node['rundeck']['user']
+  group node['rundeck']['group']
+  mode 0750
+end
+
+directory "#{node['rundeck']['base_dir']}/projects" do
+  owner node['rundeck']['user']
+  group node['rundeck']['group']
+  mode 0750
+end
+
+directory node['rundeck']['jobs_dir'] do
+  owner node['rundeck']['user']
+  group node['rundeck']['group']
+  mode 0750
+end
+
+directory '/var/rundeck' do
+  recursive true
+  action :delete
+end
+
+service 'rundeckd' do
+  action [:enable, :start]
+end
