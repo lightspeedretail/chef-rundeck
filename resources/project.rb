@@ -18,8 +18,21 @@ action :manage do
 
   token = token('chef', new_resource.token_file)
 
-  data = { 'name' => new_resource.name, 'config' => { 'description' => new_resource.description } }
+  data = { 'name' => new_resource.name, 'config' => {} }
   data['config'].merge!(new_resource.properties) if new_resource.properties
+
+  file "#{node['rundeck']['base_dir']}/projects/#{new_resource.project}/readme.md" do
+    owner node['rundeck']['user']
+    group node['rundeck']['group']
+    mode 0400
+    content "\n#{new_resource.description}\n"
+  end
+
+  file "#{node['rundeck']['base_dir']}/projects/#{new_resource.project}/motd.md" do
+    owner node['rundeck']['user']
+    group node['rundeck']['group']
+    mode 0400
+  end
 
   if project?(new_resource.project, token)
     current_config = JSON.parse(get("/api/15/project/#{new_resource.project}/config", token))
@@ -45,6 +58,6 @@ action :remove do
   return unless project?(new_resource.project, token)
 
   converge_by "deleting project '#{new_resource.project}'" do
-    puts delete("/api/15/project/#{new_resource.project}", token)
+    delete("/api/15/project/#{new_resource.project}", token)
   end
 end
