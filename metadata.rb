@@ -4,6 +4,6 @@ maintainer_email 'me@failshell.io'
 license          'MIT'
 description      'Installs/Configures rundeck'
 long_description 'Installs/Configures rundeck'
-version          '99.1.0'
+version          '99.1.1'
 
 depends          'java', '~> 1.39.0'

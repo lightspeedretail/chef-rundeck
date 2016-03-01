@@ -4,7 +4,7 @@ require 'securerandom'
 
 module RundeckAPI
   def delete(endpoint, token)
-    uri = URI("#{node['rundeck']['server']['url']}#{endpoint}?authtoken=#{token}")
+    uri = URI("http://#{node['rundeck']['server']['hostname']}:#{node['rundeck']['server']['port']}#{endpoint}?authtoken=#{token}")
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Delete.new(uri.request_uri)
     res = http.request(request)
@@ -19,7 +19,7 @@ module RundeckAPI
   end
 
   def get(endpoint, token, format = 'json')
-    uri = URI("#{node['rundeck']['server']['url']}#{endpoint}?authtoken=#{token}")
+    uri = URI("http://#{node['rundeck']['server']['hostname']}:#{node['rundeck']['server']['port']}#{endpoint}?authtoken=#{token}")
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Get.new(uri.request_uri)
     request.initialize_http_header('Accept' => "application/#{format}")
@@ -42,10 +42,10 @@ module RundeckAPI
 
   def post(endpoint, token, data, format = 'json', parameters = nil)
     if parameters.nil?
-      uri = URI("#{node['rundeck']['server']['url']}#{endpoint}?authtoken=#{token}")
+      uri = URI("http://#{node['rundeck']['server']['hostname']}:#{node['rundeck']['server']['port']}#{endpoint}?authtoken=#{token}")
     else
       params = generate_parameters_string(parameters)
-      uri = URI("#{node['rundeck']['server']['url']}#{endpoint}?authtoken=#{token}#{params}")
+      uri = URI("http://#{node['rundeck']['server']['hostname']}:#{node['rundeck']['server']['port']}#{endpoint}?authtoken=#{token}#{params}")
     end
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Post.new(uri.request_uri)
@@ -56,7 +56,7 @@ module RundeckAPI
   end
 
   def put(endpoint, token, data, format = 'json')
-    uri = URI("#{node['rundeck']['server']['url']}#{endpoint}?authtoken=#{token}")
+    uri = URI("http://#{node['rundeck']['server']['hostname']}:#{node['rundeck']['server']['port']}#{endpoint}?authtoken=#{token}")
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Put.new(uri.request_uri)
     request.initialize_http_header('Content-Type' => "application/#{format}")
@@ -83,7 +83,7 @@ module RundeckAPI
   end
 
   def service_listening?
-    uri = URI("#{node['rundeck']['server']['url']}/api")
+    uri = URI("http://#{node['rundeck']['server']['hostname']}:#{node['rundeck']['server']['port']}/api")
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Get.new(uri.request_uri)
     res = http.request(request)
