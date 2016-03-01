@@ -19,7 +19,7 @@ context 'Installation' do
 
   %w(rundeck rundeck-config).each do |p|
     describe package(p) do
-      it { should be_installed.with_version('2.6.2-1.13.GA') }
+      it { should be_installed }
     end
   end
 
