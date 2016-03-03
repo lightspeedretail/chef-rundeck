@@ -43,6 +43,17 @@ end
 
 **NOTE: the job file must be YAML**
 
+### Plugins
+
+~~~ text
+rundeck_plugin 'hipchat' do
+  url 'https://search.maven.org/remotecontent?filepath=com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.5.0/rundeck-hipchat-plugin-1.5.0.jar'
+  checksum '2017d6930e170752051f41e9936f3a285f3d340a6c0ff10931c456c4527f9ef4'
+end
+~~~
+
+**NOTE: Be aware that you need to pass a SHA256 checksum as that's what remote_file expects.**
+
 ### API token
 
 ~~~ text
