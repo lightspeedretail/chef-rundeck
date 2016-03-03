@@ -68,3 +68,12 @@ context 'Delete a job' do
     end
   end
 end
+
+context 'Install plugin' do
+  describe file('/var/lib/rundeck/libext/rundeck-hipchat-plugin-1.5.0.jar') do
+    it { should be_file }
+    it { should be_mode 400 }
+    it { should be_owned_by 'rundeck' }
+    it { should be_grouped_into 'rundeck' }
+  end
+end
