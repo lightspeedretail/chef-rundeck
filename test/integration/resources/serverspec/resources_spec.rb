@@ -77,3 +77,9 @@ context 'Install plugin' do
     it { should be_grouped_into 'rundeck' }
   end
 end
+
+context 'framework.properties' do
+  describe file('/etc/rundeck/framework.properties') do
+    it { should_not contain /Custom/ }
+  end
+end

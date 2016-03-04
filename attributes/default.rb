@@ -24,3 +24,5 @@ default['rundeck']['server']['ssl']['port'] = 4443
 default['rundeck']['ssh']['key_path'] = '/var/lib/rundeck/.ssh/id_rsa'
 default['rundeck']['ssh']['user'] = 'rundeck'
 default['rundeck']['ssh']['timeout'] = 5000 # it's in milliseconds
+
+default['rundeck']['custom_properties']['framework'] = {}

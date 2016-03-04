@@ -16,6 +16,9 @@ suites:
       - recipe[rundeck]
     attributes:
       rundeck:
+        custom_properties:
+          framework:
+            'framework.plugin.Notification.HipChatNotification.apiVersion': v2
         server:
           jvm:
             xmx: 256m
