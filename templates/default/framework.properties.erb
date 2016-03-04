@@ -36,3 +36,12 @@ framework.ssh.timeout = <%= node['rundeck']['ssh']['timeout'] %>
 # ----------------------------------------------------------------
 
 rundeck.tokens.file = <%= node['rundeck']['conf_dir'] %>/tokens.properties
+<% unless node['rundeck']['custom_properties']['framework'].empty? %>
+
+# ----------------------------------------------------------------
+# Custom properties
+# ----------------------------------------------------------------
+<% node['rundeck']['custom_properties']['framework'].each do |k, v| %>
+<%= k %> = <%= v %>
+<% end %>
+<% end %>

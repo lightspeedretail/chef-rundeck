@@ -11,3 +11,9 @@ context 'Rundeck binded on 127.0.0.1' do
     its(:exit_status) { should eq 0 }
   end
 end
+
+context 'framework.properties' do
+  describe file('/etc/rundeck/framework.properties') do
+    it { should_not contain /Custom/ }
+  end
+end
