@@ -22,6 +22,7 @@ framework.etc.dir = <%= node['rundeck']['conf_dir'] %>
 framework.var.dir = <%= node['rundeck']['base_dir'] %>/var
 framework.tmp.dir = <%= node['rundeck']['base_dir'] %>/var/tmp
 framework.libext.dir = <%= node['rundeck']['base_dir'] %>/libext
+framework.logs.dir = <%= node['rundeck']['logs_dir'] %>
 
 # ----------------------------------------------------------------
 # SSH defaults for node executor and file copier
