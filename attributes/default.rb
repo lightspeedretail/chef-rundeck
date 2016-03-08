@@ -3,6 +3,7 @@ default['rundeck']['version'] = '2.6.2-1.13.GA'
 default['rundeck']['base_dir'] = '/var/lib/rundeck'
 default['rundeck']['conf_dir'] = '/etc/rundeck'
 default['rundeck']['jobs_dir'] = "#{node['rundeck']['conf_dir']}/jobs"
+default['rundeck']['logs_dir'] = '/var/log/rundeck'
 
 default['rundeck']['user'] = 'rundeck'
 default['rundeck']['group'] = 'rundeck'
