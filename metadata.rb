@@ -6,4 +6,11 @@ description      'Installs/Configures rundeck'
 long_description 'Installs/Configures rundeck'
 version          '99.4.0'
 
+issues_url       nil
+source_url       nil
+
+chef_version     '>= 12.5.1'
+
+supports         'centos'
+
 depends          'java', '~> 1.39.0'
