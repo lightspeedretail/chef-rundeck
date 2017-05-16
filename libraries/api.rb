@@ -93,8 +93,21 @@ module RundeckAPI
   end
 
   def wait_for_rundeck_to_be_up
-    puts ''
-    puts 'Waiting for Rundeck to be up'
-    sleep(1) until service_listening?
+    begin
+      tries ||= 1
+      url = node['rundeck']['server']['url']
+      if tries == 1
+        puts "\nTrying to reach Rundeck service at #{url}"
+      else
+        puts "Trying again"
+      end
+      service_listening? ? true : raise('Unable to reach the Rundeck service')
+    rescue
+      timeout = 5
+      puts "Waiting #{timeout} seconds before retrying" if tries == 1
+      sleep timeout
+      retry if (tries += 1) < 15
+    end
   end
+
 end
