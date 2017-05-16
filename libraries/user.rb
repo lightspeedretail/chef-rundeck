@@ -12,6 +12,6 @@ module RundeckUser
   end
 
   def user?(user, realm_file)
-    File.read(realm_file).match(/^#{user}:/) ? true : false
+    File.read(realm_file) =~ /^#{user}:/ ? true : false
   end
 end

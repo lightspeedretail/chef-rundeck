@@ -8,7 +8,7 @@ module Testing
     request = Net::HTTP::Get.new(uri.request_uri)
     request.initialize_http_header('Accept' => 'application/json')
     res = http.request(request)
-    fail 'API authentication problem' if res.code == '403'
+    raise 'API authentication problem' if res.code == '403'
     res.body
   end
 

@@ -14,7 +14,7 @@ action :manage do
     remote_file "#{node['rundeck']['base_dir']}/libext/#{file_name}" do
       owner node['rundeck']['user']
       group node['rundeck']['group']
-      mode 0400
+      mode 0o400
       source new_resource.url
       checksum new_resource.checksum
     end
