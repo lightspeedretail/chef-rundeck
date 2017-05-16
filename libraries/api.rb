@@ -8,11 +8,11 @@ module RundeckAPI
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Delete.new(uri.request_uri)
     res = http.request(request)
-    fail 'API authentication problem' if res.code == '403'
+    raise 'API authentication problem' if res.code == '403'
   end
 
   def generate_parameters_string(parameters)
-    fail 'parameters must be a hash' unless parameters.class == Hash
+    raise 'parameters must be a hash' unless parameters.class == Hash
     params = nil
     parameters.each { |k, v| params.nil? ? params = "&#{k}=#{v}" : params += "&#{k}=#{v}" }
     params
@@ -24,7 +24,7 @@ module RundeckAPI
     request = Net::HTTP::Get.new(uri.request_uri)
     request.initialize_http_header('Accept' => "application/#{format}")
     res = http.request(request)
-    fail 'API authentication problem' if res.code == '403'
+    raise 'API authentication problem' if res.code == '403'
     res.body
   end
 
@@ -36,7 +36,7 @@ module RundeckAPI
   def job_id(project, job, token)
     jobs = JSON.parse(get("/api/15/project/#{project}/jobs", token))
     jobs = jobs.select { |p| p['name'] == job }
-    fail "More than one job named '#{job}'. Aborting." unless jobs.count == 1
+    raise "More than one job named '#{job}'. Aborting." unless jobs.count == 1
     jobs.first['id']
   end
 
@@ -52,7 +52,7 @@ module RundeckAPI
     request.initialize_http_header('Content-Type' => "application/#{format}")
     request.body = data
     res = http.request(request)
-    fail 'API authentication problem' if res.code == '403'
+    raise 'API authentication problem' if res.code == '403'
   end
 
   def put(endpoint, token, data, format = 'json')
@@ -62,7 +62,7 @@ module RundeckAPI
     request.initialize_http_header('Content-Type' => "application/#{format}")
     request.body = data
     res = http.request(request)
-    fail 'API authentication problem' if res.code == '403'
+    raise 'API authentication problem' if res.code == '403'
   end
 
   def project?(project, token)
@@ -79,7 +79,7 @@ module RundeckAPI
   end
 
   def token?(user, token_file)
-    File.read(token_file).match(/^#{user}:/) ? true : false
+    File.read(token_file) =~ /^#{user}:/ ? true : false
   end
 
   def service_listening?
@@ -93,21 +93,18 @@ module RundeckAPI
   end
 
   def wait_for_rundeck_to_be_up
-    begin
-      tries ||= 1
-      url = node['rundeck']['server']['url']
-      if tries == 1
-        puts "\nTrying to reach Rundeck service at #{url}"
-      else
-        puts "Trying again"
-      end
-      service_listening? ? true : raise('Unable to reach the Rundeck service')
-    rescue
-      timeout = 5
-      puts "Waiting #{timeout} seconds before retrying" if tries == 1
-      sleep timeout
-      retry if (tries += 1) < 15
+    tries ||= 1
+    url = node['rundeck']['server']['url']
+    if tries == 1
+      puts "\nTrying to reach Rundeck service at #{url}"
+    else
+      puts 'Trying again'
     end
+    service_listening? ? true : raise('Unable to reach the Rundeck service')
+  rescue
+    timeout = 5
+    puts "Waiting #{timeout} seconds before retrying" if tries == 1
+    sleep timeout
+    retry if (tries += 1) < 15
   end
-
 end

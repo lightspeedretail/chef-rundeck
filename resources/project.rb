@@ -24,14 +24,14 @@ action :manage do
   file "#{node['rundeck']['base_dir']}/projects/#{new_resource.project}/readme.md" do
     owner node['rundeck']['user']
     group node['rundeck']['group']
-    mode 0400
+    mode 0o400
     content "\n#{new_resource.description}\n"
   end
 
   file "#{node['rundeck']['base_dir']}/projects/#{new_resource.project}/motd.md" do
     owner node['rundeck']['user']
     group node['rundeck']['group']
-    mode 0400
+    mode 0o400
   end
 
   if project?(new_resource.project, token)
