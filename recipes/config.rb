@@ -24,7 +24,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-%w(framework realm tokens rundeck-config).each do |t|
+%w[framework realm tokens rundeck-config].each do |t|
   template "#{node['rundeck']['conf_dir']}/#{t}.properties" do
     owner node['rundeck']['user']
     group node['rundeck']['group']
@@ -35,7 +35,7 @@
   end
 end
 
-template "#{node['rundeck']['conf_dir']}/profile" do
+template '/etc/sysconfig/rundeckd' do
   owner node['rundeck']['user']
   group node['rundeck']['group']
   mode 0o400
