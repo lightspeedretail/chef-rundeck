@@ -1,0 +1,22 @@
+RDECK_HTTP_PORT=<%= node['rundeck']['server']['port'] %>
+RDECK_INSTALL="<%= node['rundeck']['base_dir'] %>"
+RDECK_BASE="<%= node['rundeck']['base_dir'] %>"
+RDECK_CONFIG="<%= node['rundeck']['conf_dir'] %>"
+RUNDECK_LOGDIR="<%= node['rundeck']['logs_dir'] %>"
+
+#
+# Set min/max heap size
+#
+
+RDECK_JVM_SETTINGS="$RDECK_JVM_SETTINGS -Xmx<%= node['rundeck']['server']['jvm']['xmx'] %> -Xms<%= node['rundeck']['server']['jvm']['xms'] %> -XX:MaxPermSize=256m -server"
+
+<% if node['rundeck']['server']['ssl']['enabled'] %>
+#
+# SSL
+#
+
+RDECK_HTTPS_PORT=<%= ['rundeck']['server']['ssl']['port'] %>
+RDECK_SSL_OPTS="${RDECK_SSL_OPTS:- -Djavax.net.ssl.trustStore=$RDECK_TRUSTSTORE_FILE -Djavax.net.ssl.trustStoreType=$RDECK_TRUSTSTORE_TYPE -Djava.protocol.handler.pkgs=com.sun.net.ssl.internal.www.protocol}"
+RDECK_JVM="$RDECK_JVM -Drundeck.ssl.config=$RDECK_SERVER_CONFIG/ssl/ssl.properties -Dserver.https.port=${RDECK_HTTPS_PORT} ${RDECK_SSL_OPTS}"
+
+<% end %>
