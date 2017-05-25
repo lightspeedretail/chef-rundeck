@@ -30,7 +30,7 @@ export RDECK_JVM="-Djava.security.auth.login.config=<%= node['rundeck']['conf_di
 
 <% if node['rundeck']['server']['ssl']['offloaded'] %>
 export RDECK_JVM="${RDECK_JVM} \
-				  "-Drundeck.jetty.connector.forwarded=true"
+				  -Drundeck.jetty.connector.forwarded=true"
 <% end %>
 #
 # Set min/max heap size
