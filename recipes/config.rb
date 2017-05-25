@@ -35,7 +35,16 @@
   end
 end
 
-template "#{node['rundeck']['conf_dir']}/profile" do
+# This file controls the authentication module at the login page
+# If Rundeck refuses all users and passwords, get rid of this
+template File.join(node['rundeck']['conf_dir'], 'jaas-loginmodule.conf') do
+  owner node['rundeck']['user']
+  group node['rundeck']['group']
+  mode 0o400
+  notifies :restart, 'service[rundeckd]'
+end
+
+template File.join(node['rundeck']['conf_dir'], 'profile') do
   owner node['rundeck']['user']
   group node['rundeck']['group']
   mode 0o400
