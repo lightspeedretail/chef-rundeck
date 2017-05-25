@@ -1,3 +1,7 @@
+# 101.0.2
+
+- Fix typo in jaas authentification template
+
 # 101.0.1
 
 - Fix jaas authentification module
