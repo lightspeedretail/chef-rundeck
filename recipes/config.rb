@@ -35,7 +35,7 @@
   end
 end
 
-template '/etc/sysconfig/rundeckd' do
+template "#{node['rundeck']['conf_dir']}/profile" do
   owner node['rundeck']['user']
   group node['rundeck']['group']
   mode 0o400

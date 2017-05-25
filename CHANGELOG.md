@@ -1,9 +1,3 @@
-# 100.0.0
-
-- Upgrade Rundeck version from `2.6` to `2.8`
-- Upgrade OpenJDK version from `7` to `8`.
-- Refactor Rundeck configuration file per `2.8` standards
-
 # 99.4.0
 
 - Improve test feedback loop in api library

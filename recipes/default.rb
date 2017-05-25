@@ -24,7 +24,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-node.default['java']['jdk_version'] = '8'
+node.default['java']['jdk_version'] = '7'
 include_recipe 'java'
 
 include_recipe 'rundeck::install'

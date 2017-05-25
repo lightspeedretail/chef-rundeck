@@ -1,0 +1,57 @@
+RDECK_BASE=<%= node['rundeck']['base_dir'] %>
+export RDECK_BASE
+
+JAVA_CMD=java
+RUNDECK_TEMPDIR=/tmp/rundeck
+
+RDECK_HTTP_PORT=4440
+RDECK_HTTPS_PORT=4443
+
+if [ ! -z $JAVA_HOME ]; then
+	PATH=$PATH:$JAVA_HOME/bin
+	export PATH
+	JAVA_CMD=$JAVA_HOME/bin/java
+fi
+
+export CLI_CP=$(find <%= node['rundeck']['base_dir'] %>/cli -name \*.jar -printf %p:)
+export BOOTSTRAP_CP=$(find <%= node['rundeck']['base_dir'] %>/bootstrap -name \*.jar -printf %p:)
+export RDECK_JVM="-Djava.security.auth.login.config=<%= node['rundeck']['conf_dir'] %>/jaas-loginmodule.conf \
+	-Dloginmodule.name=RDpropertyfilelogin \
+	-Drdeck.config=<%= node['rundeck']['conf_dir'] %> \
+	-Drdeck.base=<%= node['rundeck']['base_dir'] %> \
+	-Drundeck.server.configDir=<%= node['rundeck']['conf_dir'] %> \
+	-Dserver.datastore.path=<%= node['rundeck']['base_dir'] %> \
+	-Drundeck.server.serverDir=<%= node['rundeck']['base_dir'] %> \
+	-Drdeck.projects=<%= node['rundeck']['base_dir'] %>/projects \
+	-Drdeck.runlogs=/var/log/rundeck/logs \
+	-Drundeck.config.location=<%= node['rundeck']['conf_dir'] %>/rundeck-config.properties \
+	-Dserver.http.host=<%= node['rundeck']['server']['host'] %> \
+	-Djava.io.tmpdir=$RUNDECK_TEMPDIR"
+
+<% if node['rundeck']['server']['ssl']['offloaded'] %>
+export RDECK_JVM="${RDECK_JVM} \
+				  -Drundeck.jetty.connector.forwarded=true"
+<% end %>
+#
+# Set min/max heap size
+#
+RDECK_JVM="$RDECK_JVM -Xmx<%= node['rundeck']['server']['jvm']['xmx'] %> -Xms<%= node['rundeck']['server']['jvm']['xms'] %> -XX:MaxPermSize=256m -server"
+
+<% if node['rundeck']['server']['ssl']['enabled'] %>
+export RDECK_JVM="$RDECK_JVM -Drundeck.ssl.config=/etc/rundeck/ssl/ssl.properties -Dserver.https.port=${RDECK_HTTPS_PORT}"
+
+export RDECK_SSL_OPTS="-Djavax.net.ssl.trustStore=/etc/rundeck/ssl/truststore -Djavax.net.ssl.trustStoreType=jks -Djava.protocol.handler.pkgs=com.sun.net.ssl.internal.www.protocol"
+<% end %>
+
+if test -t 0 -a -z "$RUNDECK_CLI_TERSE"
+then
+  RUNDECK_CLI_TERSE=true
+  export RUNDECK_CLI_TERSE
+fi
+
+if test -n "$JRE_HOME"
+then
+   unset JRE_HOME
+fi
+
+umask 002
