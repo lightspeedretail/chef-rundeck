@@ -20,6 +20,7 @@ default['rundeck']['server']['jvm']['xmx'] = '1024m'
 default['rundeck']['server']['jvm']['xms'] = '1024m'
 
 default['rundeck']['server']['ssl']['enabled'] = false
+default['rundeck']['server']['ssl']['offloaded'] = false
 default['rundeck']['server']['ssl']['port'] = 4443
 
 default['rundeck']['ssh']['key_path'] = '/var/lib/rundeck/.ssh/id_rsa'
