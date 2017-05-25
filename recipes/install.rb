@@ -61,5 +61,5 @@ directory '/var/rundeck' do
 end
 
 service 'rundeckd' do
-  action %i[enable start]
+  action [:enable, :start]
 end

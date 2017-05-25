@@ -17,7 +17,7 @@ context 'Installation' do
     it { should exist }
   end
 
-  %w[rundeck rundeck-config].each do |p|
+  %w(rundeck rundeck-config).each do |p|
     describe package(p) do
       it { should be_installed }
     end
@@ -77,7 +77,7 @@ context 'Service' do
 end
 
 context 'Configuration' do
-  %w[realm framework tokens rundeck-config].each do |e|
+  %w(realm framework tokens rundeck-config).each do |e|
     describe file("/etc/rundeck/#{e}.properties") do
       it { should be_file }
       it { should be_mode 400 }

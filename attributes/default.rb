@@ -1,4 +1,4 @@
-default['rundeck']['version'] = '2.8.2-1.31.GA'
+default['rundeck']['version'] = '2.6.2-1.13.GA'
 
 default['rundeck']['base_dir'] = '/var/lib/rundeck'
 default['rundeck']['conf_dir'] = '/etc/rundeck'

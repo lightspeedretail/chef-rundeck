@@ -4,7 +4,7 @@ maintainer_email 'me@failshell.io'
 license          'MIT'
 description      'Installs/Configures rundeck'
 long_description 'Installs/Configures rundeck'
-version          '100.0.0'
+version          '99.4.0'
 
 issues_url       nil
 source_url       nil
