@@ -1,3 +1,24 @@
+# 101.0.1
+
+- Fix jaas authentification module
+
+# 101.0.0
+
+- Reverted changes from `100.0.0`
+- Major bump to `101.0.0`
+- Back to Rundeck version `2.6.2`
+- Returned configuration to `2.6` scheme
+- Added attribute to drive jetty connector forwarding
+- Rubocop pleasing action
+
+# 100.0.0
+
+- Upgrade Rundeck version from `2.6` to `2.8`
+- Upgrade OpenJDK version from `7` to `8`
+- Refactor Rundeck configuration file per `2.8` standards
+- Major version bump
+- Minor Rubocop pass
+
 # 99.4.0
 
 - Improve test feedback loop in api library
